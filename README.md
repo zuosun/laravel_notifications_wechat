@@ -1,0 +1,2 @@
+# laravel_notifications_wechat
+laravel通知，使用easywechat发送微信通州。
