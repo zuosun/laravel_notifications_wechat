@@ -1,5 +1,5 @@
 # laravel_notifications_wechat
->使用laravel 通知， EasyWechat 来通知客户。
+>使用laravel 通知， EasyWechat 来发送通知。
 
 >laravel 5.3+ 请移步[excitedcat/laravel-notification-wechat](https://github.com/excitedcat/laravel-notification-wechat)
 
