@@ -1,7 +1,7 @@
 {
     "name": "zztj/laravel_notifications_wechat",
     "description": "Use Wechat to send notification.",
-    "homepage": "https://git@github.com:zztj/laravel_notifications_wechat.git",
+    "homepage": "https://github.com/zztj/laravel_notifications_wechat",
     "license": "MIT",
     "authors": [
         {
