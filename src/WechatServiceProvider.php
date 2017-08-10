@@ -14,4 +14,14 @@ class WechatServiceProvider extends ServiceProvider
         $this->app->when(WechatChannel::class)
             ->give('wechat_notice');
     }
+
+	/**
+     * 在容器中注册绑定.
+     *
+     * @return void
+     */
+    public function register()
+    {
+
+    }
 }
