@@ -1,26 +1,1 @@
-# laravel_notifications_wechat
->使用laravel 通知， EasyWechat 来发送通知。
-
->laravel 5.3+ 请移步[excitedcat/laravel-notification-wechat](https://github.com/excitedcat/laravel-notification-wechat)
-
->个人需要所以本项目是根据[excitedcat/laravel-notification-wechat](https://github.com/excitedcat/laravel-notification-wechat) 改写，适用Laravel 5.2。
-
-**还在测试阶段，慎用！！！**
-
-## 安装方法
-
-````bash
-composer require zztj/laravel_notifications_wechat
-````
-## 使用方法
-
-编辑config/app.php文件在providers数组中增加：
-````bash
-ExcitedCat\WechatNotification\WechatServiceProvider::class
-````
-创建Notification
-````bash
-php artisan make:notification NewInvoice
-````
-调用方式参考Laravel官方文档
-
+# laravel_notifications_wechat>使用laravel 通知， EasyWechat 来发送通知。>laravel 5.3+ 请移步[excitedcat/laravel-notification-wechat](https://github.com/excitedcat/laravel-notification-wechat)>个人需要所以本项目是根据[excitedcat/laravel-notification-wechat](https://github.com/excitedcat/laravel-notification-wechat) 改写，适用Laravel 5.2。## 安装方法````bashcomposer require zztj/laravel_notifications_wechat````## 使用方法> 编辑config/app.php文件在providers数组中增加：````bashExcitedCat\WechatNotification\WechatServiceProvider::class````> 创建Notification````bashphp artisan make:notification NewWarning````* 生成代码示例如下：````php<?phpnamespace App\Notifications;use ExcitedCat\WechatNotification\WechatChannel;use Illuminate\Bus\Queueable;use Illuminate\Contracts\Queue\ShouldQueue;use Illuminate\Notifications\Notification;class NewWarning extends Notification implements ShouldQueue{    use Queueable;    public $data;    /**     * Create a new notification instance.     *     * @return void     */    public function __construct($data)    {        $this->data = $data;    }    /**     * Get the notification's delivery channels.     *     * @param  mixed  $notifiable     * @return array     */    public function via($notifiable)    {        return ['database',WechatChannel::class];    }    public function toWechat($notifiable)    {        $notice = [            'templateId' => '3dUrtgoyZOoX0w_VkbEwD9r_****',            'url' => 'http://demo.com',            'data' => [                'first'    => '你负责的系统出现预警，请关注处理！',                'system' => $this->data['systemName'],                'time' => $this->data['created_at'],                'account' => $this->data['continue_number'],                'remark'   => '更多详情，请登录系统查看。'            ]        ];        return $notice;    }	/**	 * Get the array representation of the notification.	 *	 * @param  mixed  $notifiable	 * @return array	 */	public function toDatabase($notifiable)	{		return $this->data;	}}````> 调用方式可参考Laravel官方文档* 控制器调用例子````php$user = User::find(1);$wechat = [    'systemName'=>'***系统',    'created_at'=>'2017-08-10 09:57:02',    'continue_number'=>2];$user->notify(new NewWarning($wechat));````* 更改用户模型在app/Models/User.php中填下如下代码````php//定义微信通知收件人public function routeNotificationForWechat(){   	return $this->wechat_open_id;}````
